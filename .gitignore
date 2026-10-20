@@ -3,6 +3,3 @@ target/
 *.iml
 .vscode/
 
-# Material de apoyo para la demo (no subir)
-demo-cambios/
-GUIA_DEMO.md
