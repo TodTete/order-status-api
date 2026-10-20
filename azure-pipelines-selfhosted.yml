@@ -1,0 +1,20 @@
+# Alternativa para agente propio (self-hosted) en tu laptop.
+# Requisitos en la máquina: JDK 17 y Maven en el PATH.
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  name: Default
+
+steps:
+  - script: mvn -B clean verify
+    displayName: 'Maven: compilar y ejecutar pruebas'
+
+  - task: PublishTestResults@2
+    displayName: 'Publicar resultados de pruebas'
+    condition: succeededOrFailed()
+    inputs:
+      testResultsFormat: 'JUnit'
+      testResultsFiles: '**/surefire-reports/TEST-*.xml'

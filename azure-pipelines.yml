@@ -1,0 +1,21 @@
+# CI - Order Status API (Java 17 + Maven)
+# Se ejecuta con cada push a main. La validación de Pull Requests
+# en Azure Repos se activa con una política de rama (Build Validation).
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: ubuntu-latest   # Si usas agente propio: name: Default
+
+steps:
+  - task: Maven@4
+    displayName: 'Maven: compilar y ejecutar pruebas'
+    inputs:
+      mavenPomFile: 'pom.xml'
+      goals: 'clean verify'
+      javaHomeOption: 'JDKVersion'
+      jdkVersionOption: '1.17'
+      publishJUnitResults: true
+      testResultsFiles: '**/surefire-reports/TEST-*.xml'
